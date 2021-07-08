@@ -2,6 +2,7 @@
 #include <string>
 
 #include "MyUniquePointer.hpp"
+#include "MySharedPointer.hpp"
 
 class A
 {
@@ -37,6 +38,16 @@ int main()
 	ptr.reset(new A("third"));
 	(*ptr).test();
 	ptr->test();
+
+	MySharedPointer<A> sh_ptr(new A("sh_first"));
+	auto a_sh_ptr = sh_ptr.get();
+	auto sh_ptr2(sh_ptr);
+	auto b_sh_ptr = sh_ptr2.get();
+	sh_ptr.reset(new A("sh_second"));
+	auto c_sh_ptr = sh_ptr.get();
+	sh_ptr2.reset(new A("sh_third"));
+	(*sh_ptr).test();
+	sh_ptr->test();
 
 	return 0;
 }

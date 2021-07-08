@@ -23,5 +23,8 @@
     <ClInclude Include="MyUniquePointer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MySharedPointer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
