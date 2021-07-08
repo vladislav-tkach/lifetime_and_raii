@@ -7,64 +7,80 @@ class MyUniquePointer
 {
 public:
 	MyUniquePointer();
-	MyUniquePointer(T* value);
-	MyUniquePointer(const MyUniquePointer& ptr) = delete;
-	//MyUniquePointer(MyUniquePointer&& ptr);
+	explicit MyUniquePointer(T* value);
+	MyUniquePointer(const MyUniquePointer<T>& ptr) = delete;
+	//MyUniquePointer(MyUniquePointer<T>&& ptr);
 	~MyUniquePointer();
 
 	T* get() const;
 	void reset(T* value);
-	void release();
+	T* release();
 	T& operator*() const;
+	T* operator->() const;
 private:
-	T* value;
+	T* _value;
 };
 
 template<typename T>
 MyUniquePointer<T>::MyUniquePointer()
 {
-	value = nullptr;
+	_value = nullptr;
 }
 
 
 template <typename T>
 MyUniquePointer<T>::MyUniquePointer(T* value)
 {
-	this->value = value;
+	_value = value;
 }
+
+
+/*template <typename T>
+MyUniquePointer<T>::MyUniquePointer(MyUniquePointer<T>&& ptr)
+{
+	_value(std::move(ptr._value));
+}*/
 
 
 template<typename T>
 MyUniquePointer<T>::~MyUniquePointer()
 {
-	delete this->value;
+	delete _value;
 }
 
 
 template<typename T>
 T* MyUniquePointer<T>::get() const
 {
-	return value;
+	return _value;
 }
 
 
 template<typename T>
 void MyUniquePointer<T>::reset(T* value)
 {
-	delete this->value;
-	this->value = value;
+	delete _value;
+	_value = value;
 }
 
 template<typename T>
-void MyUniquePointer<T>::release()
+T* MyUniquePointer<T>::release()
 {
-	delete value;
-	value = nullptr;
+	auto temp = _value;
+	_value = nullptr;
+	return temp;
 }
 
 
 template<typename T>
 T& MyUniquePointer<T>::operator*() const
 {
-	return *value;
+	return *_value;
+}
+
+
+template<typename T>
+T* MyUniquePointer<T>::operator->() const
+{
+	return _value;
 }

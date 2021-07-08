@@ -32,10 +32,11 @@ int main()
 	auto a_ptr = ptr.get();
 	ptr.reset(new A("second"));
 	auto b_ptr = ptr.get();
-	ptr.release();
+	delete ptr.release();
 	auto c_ptr = ptr.get();
 	ptr.reset(new A("third"));
 	(*ptr).test();
+	ptr->test();
 
 	return 0;
 }
